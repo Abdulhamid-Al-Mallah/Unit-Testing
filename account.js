@@ -16,6 +16,11 @@ function validateAccount(firstName, lastName, email, dob, password, confirmPassw
    if (!emailRegex.test(email)) {
       return "Invalid email format";
    }
+
+   if (password.length < 8) {
+      return "Password too short";
+   }
+   
    return "Success";
 }
 
