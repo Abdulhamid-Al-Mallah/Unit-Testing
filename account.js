@@ -20,7 +20,16 @@ function validateAccount(firstName, lastName, email, dob, password, confirmPassw
    if (password.length < 8) {
       return "Password too short";
    }
-   
+
+   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])/;
+   if (!passwordRegex.test(password)) {
+      return "Password must contain at least one number and one special character and one capital letter";
+   }
+
+   if (password !== confirmPassword) {
+      return "Passwords do not match";
+   }
+
    return "Success";
 }
 
