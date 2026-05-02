@@ -1,0 +1,12 @@
+name: Automated Quality Check
+on: [push, pull_request]
+
+jobs:
+  test-logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: npm install
+      - name: Run 15 Unit Tests
+        run: npm test
