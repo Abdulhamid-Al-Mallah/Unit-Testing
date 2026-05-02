@@ -1,0 +1,13 @@
+{
+  "name": "account-testing-assignment",
+  "version": "1.0.0",
+  "description": "Unit tests for Create New Account Page",
+  "main": "account.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0"
+  }
+}
