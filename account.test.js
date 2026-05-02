@@ -22,4 +22,9 @@ describe("Create New Account Page Tests", () => {
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
       expect(result).toBe("Success");
    });
+
+   test("Case 2: Missing First Name (Invalid Partition)", () => {
+      const result = validateAccount("", testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("All fields are required");
+   });
 });
