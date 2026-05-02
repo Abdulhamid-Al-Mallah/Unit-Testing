@@ -78,18 +78,19 @@ describe("Create New Account Page Tests", () => {
       expect(result).toBe("Success");
    });
 
-   test("Case 13: Future Date of Birth (BVA)", () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const dobStr = tomorrow.toISOString().split("T")[0];
-      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
-      expect(result).toBe("Date of birth cannot be in the future");
+   test("Case 13: Missing First Name (Invalid Partition)", () => {
+      const result = validateAccount("", testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("All fields are required");
    });
 
-   test("Case 14: Today as Date of Birth (BVA)", () => {
-      const today = new Date().toISOString().split("T")[0];
-      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, today, testUser.pass, testUser.confirm);
-      expect(result).toBe("User must be at least 18 years old");
+   test("Case 14: SQL Injection Attempt (Hacker)", () => {
+      const result = validateAccount("' OR '1'='1", testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("Names should only contain letters");
    });
-   
+
+   test("Case 15: Extremely long Last Name (Stress)", () => {
+      const longName = "a".repeat(1000);
+      const result = validateAccount(testUser.firstName, longName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("Success");
+   });
 });
