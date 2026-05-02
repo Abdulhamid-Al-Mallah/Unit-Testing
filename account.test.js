@@ -47,10 +47,49 @@ describe("Create New Account Page Tests", () => {
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.dob, "OnlyLetters", "OnlyLetters");
       expect(result).toBe("Password must contain at least one number and one special character and one capital letter");
    });
+
    test("Case 7: Empty Email (EP)", () => {
       const result = validateAccount(testUser.firstName, testUser.lastName, "", testUser.dob, testUser.pass, testUser.confirm);
       expect(result).toBe("All fields are required");
    });
 
+   test("Case 8: Password 7 chars (BVA)", () => {
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.dob, "1234567", "1234567");
+      expect(result).toBe("Password too short");
+   });
 
+   test("Case 9: Password 8 chars (BVA)", () => {
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.dob, "SecurePass1!", "SecurePass1!");
+      expect(result).toBe("Success");
+   });
+
+   test("Case 10: First Name 2 chars (BVA)", () => {
+      const result = validateAccount("Ab", testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("First name and last name must be at least 3 characters long");
+   });
+
+   test("Case 11: Last Name 2 chars (BVA)", () => {
+      const result = validateAccount(testUser.firstName, "Sy", testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("First name and last name must be at least 3 characters long");
+   });
+
+   test("Case 12: Name 3 chars (BVA)", () => {
+      const result = validateAccount("Joe", "Doe", testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("Success");
+   });
+
+   test("Case 13: Future Date of Birth (BVA)", () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dobStr = tomorrow.toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
+      expect(result).toBe("Date of birth cannot be in the future");
+   });
+
+   test("Case 14: Today as Date of Birth (BVA)", () => {
+      const today = new Date().toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, today, testUser.pass, testUser.confirm);
+      expect(result).toBe("User must be at least 18 years old");
+   });
+   
 });
