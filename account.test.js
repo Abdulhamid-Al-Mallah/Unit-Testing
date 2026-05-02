@@ -18,5 +18,8 @@ describe("Create New Account Page Tests", () => {
       testUser = null;
    });
 
-
+   test("Case 1: Valid input returns Success (Equivalence Partitioning)", () => {
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
+      expect(result).toBe("Success");
+   });
 });
