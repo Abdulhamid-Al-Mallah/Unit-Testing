@@ -94,3 +94,39 @@ describe("Create New Account Page Tests", () => {
       expect(result).toBe("Success");
    });
 });
+ test("Case 11: Future Date of Birth (BVA - Boundary)", () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dobStr = tomorrow.toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
+      expect(result).toBe("Date of birth cannot be in the future");
+   });
+
+   test("Case 12: Today as Date of Birth (BVA - Invalid)", () => {
+      const today = new Date().toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, today, testUser.pass, testUser.confirm);
+      expect(result).toBe("User must be at least 18 years old");
+   });
+   test("Case 19: Age 17 (BVA - Below Boundary)", () => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 17);
+      const dobStr = date.toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
+      expect(result).toBe("User must be at least 18 years old");
+   });
+    test("Case 20: Age 18 Exactly (BVA - On Boundary)", () => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 18);
+      const dobStr = date.toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
+      expect(result).toBe("Success");
+   });
+
+   test("Case 21: Age 19 (BVA - Above Boundary)", () => {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - 19);
+      const dobStr = date.toISOString().split("T")[0];
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
+      expect(result).toBe("Success");
+   });
+    
