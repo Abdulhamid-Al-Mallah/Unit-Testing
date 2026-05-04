@@ -30,6 +30,23 @@ function validateAccount(firstName, lastName, email, dob, password, confirmPassw
       return "Passwords do not match";
    }
 
+ const currentdate = new Date();
+   const birthDate = new Date(dob);
+
+   if (birthDate > currentdate) {
+      return "Date of birth cannot be in the future";
+   }
+
+   let age = currentdate.getFullYear() - birthDate.getFullYear();
+   const monthDiff = currentdate.getMonth() - birthDate.getMonth();
+   if (monthDiff < 0 || (monthDiff === 0 && currentdate.getDate() < birthDate.getDate())) {
+      age--;
+   }
+
+   if (age < 18) {
+      return "User must be at least 18 years old";
+   }
+
    return "Success";
 }
 
