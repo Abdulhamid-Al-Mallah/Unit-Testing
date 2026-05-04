@@ -129,4 +129,7 @@ describe("Create New Account Page Tests", () => {
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
       expect(result).toBe("Success");
    });
-    
+     test("Case 18: Empty Date of Birth (EP)", () => {
+      const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, "", testUser.pass, testUser.confirm);
+      expect(result).toBe("All fields are required");
+   });
