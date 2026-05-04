@@ -93,8 +93,8 @@ describe("Create New Account Page Tests", () => {
       const result = validateAccount(testUser.firstName, longName, testUser.email, testUser.dob, testUser.pass, testUser.confirm);
       expect(result).toBe("Success");
    });
-});
- test("Case 11: Future Date of Birth (BVA - Boundary)", () => {
+
+   test("Case 16: Future Date of Birth (BVA - Boundary)", () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dobStr = tomorrow.toISOString().split("T")[0];
@@ -102,19 +102,21 @@ describe("Create New Account Page Tests", () => {
       expect(result).toBe("Date of birth cannot be in the future");
    });
 
-   test("Case 12: Today as Date of Birth (BVA - Invalid)", () => {
+   test("Case 17: Today as Date of Birth (BVA - Invalid)", () => {
       const today = new Date().toISOString().split("T")[0];
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, today, testUser.pass, testUser.confirm);
       expect(result).toBe("User must be at least 18 years old");
    });
-   test("Case 19: Age 17 (BVA - Below Boundary)", () => {
+
+   test("Case 18: Age 17 (BVA - Below Boundary)", () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 17);
       const dobStr = date.toISOString().split("T")[0];
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
       expect(result).toBe("User must be at least 18 years old");
    });
-    test("Case 20: Age 18 Exactly (BVA - On Boundary)", () => {
+
+   test("Case 19: Age 18 Exactly (BVA - On Boundary)", () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 18);
       const dobStr = date.toISOString().split("T")[0];
@@ -122,14 +124,16 @@ describe("Create New Account Page Tests", () => {
       expect(result).toBe("Success");
    });
 
-   test("Case 21: Age 19 (BVA - Above Boundary)", () => {
+   test("Case 20: Age 19 (BVA - Above Boundary)", () => {
       const date = new Date();
       date.setFullYear(date.getFullYear() - 19);
       const dobStr = date.toISOString().split("T")[0];
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, dobStr, testUser.pass, testUser.confirm);
       expect(result).toBe("Success");
    });
-     test("Case 18: Empty Date of Birth (EP)", () => {
+
+   test("Case 21: Empty Date of Birth (EP)", () => {
       const result = validateAccount(testUser.firstName, testUser.lastName, testUser.email, "", testUser.pass, testUser.confirm);
       expect(result).toBe("All fields are required");
    });
+});
